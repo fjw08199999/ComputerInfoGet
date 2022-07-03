@@ -5,7 +5,6 @@ import win32com
 import json
 import wmi
 import win32com
-import time
 
 
 global hardware
@@ -14,6 +13,7 @@ hardware = wmi.WMI()
 
 def get_network_info():
     network = []
+
     for getNetwork in hardware.Win32_NetworkAdapterConfiguration(IPEnabled=1):
         network.append(
             {
@@ -41,5 +41,20 @@ def get_cpu_info():
     return cpu
 
 
+def get_disk_info():
+    disk = []
+
+    for getDisk in hardware.Win32_DiskDrive():
+        disk.append(
+            {
+                "Serial": hardware.Win32_PhysicalMedia()[0].SerialNumber.lstrip().rstrip(),
+                "Caption": getDisk.Caption,
+                "Size": str(int(float(getDisk.Size)/1024/1024/1024))+"G"
+            }
+        )
+    return disk
+
+
 print(get_network_info())
 print(get_cpu_info())
+print(get_disk_info())
