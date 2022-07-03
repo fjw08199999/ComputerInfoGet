@@ -1,10 +1,4 @@
-import os
-import sys
-import socket
-import win32com
-import json
 import wmi
-import win32com
 
 
 global hardware
