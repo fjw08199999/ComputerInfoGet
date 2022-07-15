@@ -82,6 +82,8 @@ async def get_cpu():
     return cpu
 
 
+
+#TODO OOP
 @app.get("/cnetwork")
 async def get_network():
     GET.get_network_info()
@@ -102,7 +104,7 @@ class UserIn(BaseModel):
 data = [{
         "username": "",
         "password": "",
-        "email": "",
+        "email": EmailStr,
         "full_name": ""
         }]
 
@@ -119,7 +121,7 @@ async def create_user(user: UserIn):
     dataframC.loc[0, "email"] = user.email
     dataframC.loc[0, "full_name"] = user.full_name
 
-    dataframC.to_json(orient="split")
+    # dataframC.to_json(orient="split")
     dataframC.to_excel("data.xlsx")
 
     print(dataframC)
@@ -127,3 +129,12 @@ async def create_user(user: UserIn):
     print("檔案已生成")
 
     return user
+
+
+@app.get("/user_list")
+async def user_list():
+    path = "data.xlsx"
+    data = pd.read_excel(path)
+    print(data)
+
+    return data.to_json
