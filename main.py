@@ -119,10 +119,10 @@ async def create_user(user: UserIn):
     dataframC.loc[0, "email"] = user.email
     dataframC.loc[0, "full_name"] = user.full_name
 
+    dataframC.to_json(orient="split")
+    dataframC.to_excel("data.xlsx")
+
     print(dataframC)
-
-
-
 
     print("檔案已生成")
 
